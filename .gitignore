@@ -1,0 +1,50 @@
+*.db
+.states
+.web
+assets/external/
+# Environment variables
+.env
+
+# Python
+venv/
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Reflex (old)
+.web/
+assets/
+reflex.db
+webui/
+rxconfig.py
+
+# Entity mappings
+entity_mappings.json
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db

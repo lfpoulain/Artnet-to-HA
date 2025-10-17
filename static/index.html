@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OrcheStream Bridge</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="background-gradient"></div>
+    
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="logo">
+                    <span class="logo-icon">🎭</span>
+                    <div class="logo-text">
+                        <h1>OrcheStream Bridge</h1>
+                        <p>Art-Net → Home Assistant</p>
+                    </div>
+                </div>
+                <button class="btn-settings" onclick="toggleConfig()">
+                    <span>⚙️</span>
+                    <span>Settings</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- Status Card -->
+        <div class="card status-card">
+            <div class="card-header">
+                <span class="card-icon">📊</span>
+                <h2>System Status</h2>
+                <span class="status-message" id="statusMessage">Ready</span>
+            </div>
+
+            <div class="status-grid">
+                <div class="status-item">
+                    <div class="status-item-header">
+                        <span class="status-icon">🌐</span>
+                        <span class="status-label">Art-Net</span>
+                    </div>
+                    <span class="badge" id="artnetBadge">OFFLINE</span>
+                </div>
+
+                <div class="status-item">
+                    <div class="status-item-header">
+                        <span class="status-icon">🏠</span>
+                        <span class="status-label">Home Assistant</span>
+                    </div>
+                    <span class="badge" id="haBadge">DISCONNECTED</span>
+                </div>
+
+                <div class="status-item">
+                    <div class="status-item-header">
+                        <span class="status-icon">💡</span>
+                        <span class="status-label">Entities</span>
+                    </div>
+                    <span class="badge badge-blue" id="entitiesBadge">0</span>
+                </div>
+            </div>
+
+            <hr class="divider">
+
+            <div class="control-buttons">
+                <button class="btn btn-start" id="startBtn" onclick="startBridge()">
+                    <span>▶️</span>
+                    <span>Start Bridge</span>
+                </button>
+                <button class="btn btn-stop" id="stopBtn" onclick="stopBridge()" style="display: none;">
+                    <span>⏹️</span>
+                    <span>Stop Bridge</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Configuration Panel -->
+        <div class="card config-card" id="configCard" style="display: none;">
+            <div class="card-header">
+                <span class="card-icon">⚙️</span>
+                <h2>Configuration</h2>
+                <button class="btn-close" onclick="toggleConfig()">✕</button>
+            </div>
+
+            <hr class="divider">
+
+            <!-- Home Assistant Section -->
+            <div class="config-section config-section-purple">
+                <div class="config-section-header">
+                    <span class="config-icon">🏠</span>
+                    <h3>Home Assistant</h3>
+                </div>
+                <div class="form-group">
+                    <label>URL</label>
+                    <input type="text" id="haUrl" placeholder="http://homeassistant.local:8123">
+                </div>
+                <div class="form-group">
+                    <label>Access Token</label>
+                    <input type="password" id="haToken" placeholder="Long-lived access token">
+                </div>
+            </div>
+
+            <!-- Art-Net Section -->
+            <div class="config-section config-section-blue">
+                <div class="config-section-header">
+                    <span class="config-icon">🌐</span>
+                    <h3>Art-Net Configuration</h3>
+                </div>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Universe</label>
+                        <input type="number" id="artnetUniverse" value="0">
+                    </div>
+                    <div class="form-group">
+                        <label>Bind IP</label>
+                        <input type="text" id="artnetBindIp" value="0.0.0.0">
+                    </div>
+                    <div class="form-group">
+                        <label>Port</label>
+                        <input type="number" id="artnetPort" value="6454">
+                    </div>
+                </div>
+            </div>
+
+            <!-- DMX Section -->
+            <div class="config-section config-section-green">
+                <div class="config-section-header">
+                    <span class="config-icon">🎛️</span>
+                    <h3>DMX Settings</h3>
+                </div>
+                <div class="form-group">
+                    <label>Start Channel</label>
+                    <input type="number" id="dmxStartChannel" value="1">
+                </div>
+            </div>
+
+            <hr class="divider">
+
+            <div class="config-buttons">
+                <button class="btn btn-save" onclick="saveConfig()">
+                    <span>💾</span>
+                    <span>Save Configuration</span>
+                </button>
+                <button class="btn btn-cancel" onclick="toggleConfig()">
+                    <span>↩️</span>
+                    <span>Cancel</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Entity Table -->
+        <div class="card entities-card">
+            <div class="card-header">
+                <span class="card-icon">💡</span>
+                <h2>Entity Mappings</h2>
+                <button class="btn btn-refresh" id="refreshBtn" onclick="refreshEntities()" disabled>
+                    <span>🔄</span>
+                    <span>Refresh</span>
+                </button>
+            </div>
+
+            <hr class="divider">
+
+            <div id="entitiesContent">
+                <div class="empty-state">
+                    <span class="empty-icon">📭</span>
+                    <h3>No entities loaded yet</h3>
+                    <p>Start the bridge to load entities with 'orchestream' label</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>💜 OrcheStream • DMX to Smart Home Bridge</p>
+        </footer>
+    </div>
+
+    <script src="/static/app.js"></script>
+</body>
+</html>
